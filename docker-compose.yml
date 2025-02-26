@@ -7,3 +7,26 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../sl-api/:/app
+    networks:
+      - sl-network
+  
+  db:
+    image: postgres:15
+    container_name: sl-db-container
+    environment:
+      POSTGRES_DB: learning
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - sl-db-data:/var/lib/postgresql/data
+    networks:
+      - sl-network
+
+networks:
+  sl-network:
+
+volumes:
+  sl-db-data:
+    driver: local
